@@ -10,17 +10,17 @@ import javax.persistence.*
 @Entity
 @Table(name = "products")
 data class Product (
-        @JsonProperty("name")                   // Свойство в JSON объекте
-        @Column(name = "name", length = 200)    // Поле в БД и длина
-        val name: String = "",                  // Неизменяемое свойство name, с пустой строкой в качестве значения по умолчанию
+        @JsonProperty("name")
+        @Column(name = "name", length = 200)
+        val name: String = "",
 
         @JsonProperty("description")
         @Column(name = "description", length = 1000)
         val description: String = "",
 
-        @Id                                     // Поле - Primary Key
+        @Id
         @JsonProperty("id")
         @Column(name = "id")
-        @GeneratedValue(strategy = GenerationType.AUTO) // Также говорим ему что оно - Autoincrement
+        @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Long = 0L
 )

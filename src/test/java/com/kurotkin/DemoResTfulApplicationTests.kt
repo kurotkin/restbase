@@ -17,12 +17,17 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 @SpringBootTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) // Запускать тесты в алфавитном порядке
 class DemoResTfulApplicationTests {
+    // Адрес
     private val baseUrl = "http://localhost:8080/products/"
-    private val jsonContentType = MediaType(MediaType.APPLICATION_JSON.type, MediaType.APPLICATION_JSON.subtype) // Записываем http заголовок в переменную для удобства
-    private lateinit var mockMvc: MockMvc // Объявляем изменяемую переменную с отложенной инициализацией в которой будем хранить mock объект
+    // Заголовки
+    private val jsonContentType = MediaType(MediaType.APPLICATION_JSON.type, MediaType.APPLICATION_JSON.subtype)
+    // Переменная с отложенной инициализацией в которой будем хранить mock объект
+    private lateinit var mockMvc: MockMvc
 
+
+    // Объявляем изменяемую переменную с отложенной инициализацией в которую будет внедрен контекст приложения
     @Autowired
-    private lateinit var webAppContext: WebApplicationContext // Объявляем изменяемую переменную с отложенной инициализацией в которую будет внедрен контекст приложения
+    private lateinit var webAppContext: WebApplicationContext
 
     @Before // Этот метод будет запущен перед каждым тестом
     fun before() {
@@ -30,14 +35,15 @@ class DemoResTfulApplicationTests {
     }
 
     @Test
-    fun `1 - Get empty list of products`() { // Так можно красиво называть методы
-        val request = get(baseUrl).contentType(jsonContentType) // Создаем GET запрос по адресу http://localhost:8080/products/ с http заголовком Content-Type: application/json
+    fun `1 - Get empty list of products`() {
+        // Создаем GET запрос по адресу http://localhost:8080/products/ с http заголовком Content-Type: application/json
+        val request = get(baseUrl).contentType(jsonContentType)
 
-        mockMvc.perform(request) // Выполняем запрос
-                .andExpect(status().isOk) // Ожидаем http статус 200 OK
-                .andExpect(content().json("[]", true)) // ожидаем пустой JSON массив в теле ответа
+        mockMvc.perform(request)                        // Выполняем запрос
+                .andExpect(status().isOk)               // Ожидаем http статус 200 OK
+                .andExpect(content().json("[]", true))  // ожидаем пустой JSON массив в теле ответа
     }
-    // Далее по аналогии
+
     @Test
     fun `2 - Add first product`() {
         val passedJsonString = """
